@@ -1,16 +1,15 @@
-import MathExpression from "./js/Calculator/MathExpression";
+const express = require('express');
+const path = require('path');
+const app = express();
 
-const app = document.querySelector("#app");
-let expression = "((5*5+3)^2)/2+4*9";
+const PORT = process.env.PORT || 3000;
 
-expression = new MathExpression(expression);
-const e = {
-    le: e,
-    re: e,
-    operation: () => {
+app.use('/', express.static(path.resolve(__dirname, "client" , "public")));
 
-    },
-    getVal: () => operation(le.getVal(), re.getVal())
-}
+app.use('/*' , (req,res) => {
+    res.sendFile(path.resolve(__dirname, "client" , "index.html"));
+});
 
-console.log(makeExpression(expression));
+app.listen(PORT, ()=>{
+    console.log(`Listing On http://localhost:${PORT}`);
+});
