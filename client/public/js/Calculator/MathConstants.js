@@ -1,4 +1,4 @@
-const operations = {
+export const operations = {
     "-": (l, r) => {
         return new Number(l) - new Number(r);
     },
@@ -19,7 +19,7 @@ const operations = {
     }
 }
 
-const functions = {
+export const functions = {
     "sin": (val) => (
         Math.sin(val * Math.PI / 180.0)
     ),
@@ -29,9 +29,4 @@ const functions = {
     "tan": (val) => {
         Math.tan(val * Math.PI / 180.0)
     }
-}
-
-module.exports = {
-    operations,
-    functions
 }

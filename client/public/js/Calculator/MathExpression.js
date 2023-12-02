@@ -2,7 +2,8 @@ import { operations, functions } from "./MathConstants.js";
 
 export default class MathExpression {
     constructor(expression) {
-        this.expression = this.clean(expression);
+        this.expression = this.formatBrackets(this.clean(expression));
+        console.log(this.expression);
         const t = this.tokenize();
         if (t.le) {
             this.le = new MathExpression(t.le);
@@ -58,15 +59,12 @@ export default class MathExpression {
                     let brackets = this.getMatchingBrackets();
                     if (brackets) {
                         let brack = brackets.find((b) => b[0] == index + func.length);
-                        if (brack) {
-                            return (
-                                {
-                                    le: func,
-                                    re: this.clean(this.expression.slice(brack[0], brack[1] + 1)),
-                                    operation: operations["f"]
-                                }
-                            )
-                        }
+                        if (brack)
+                            return ({
+                                le: func,
+                                re: this.clean(this.expression.slice(brack[0], brack[1] + 1)),
+                                operation: operations["f"]
+                            })
                     }
                 }
             }
@@ -75,24 +73,46 @@ export default class MathExpression {
         return this.expression;
     }
 
-    getMatchingBrackets() {
+    getMatchingBrackets(expression = this.expression) {
         let brackets = [];
         let stack = [];
 
-        for (let i = 0; i < this.expression.length; i++) {
-            if (this.expression[i] == "(") {
+        for (let i = 0; i < expression.length; i++) {
+            if (expression[i] == "(") {
                 stack.push(i);
             }
-            else if (this.expression[i] == ")") {
+            else if (expression[i] == ")") {
                 if (stack.length > 0) brackets.push([stack.pop(), i])
                 else return null;
 
-                if (brackets[brackets.length - 1][0] == 0 && brackets[brackets.length - 1][1] == this.expression.length - 1) {
+                if (brackets[brackets.length - 1][0] == 0 && brackets[brackets.length - 1][1] == expression.length - 1) {
                     brackets.pop();
                 }
             }
         }
         return (stack.length === 0) ? brackets : null;
+    }
+
+    formatBrackets(expression) {
+        let brackets = this.getMatchingBrackets(expression);
+        let newExpression = "";
+        for (let i = 0; i < expression.length; i++) {
+            if (!brackets.find(b => i < b[1] && i > b[0])) {
+                if (i > 0 && expression[i] === "(") {
+                    newExpression += !isNaN(expression[i - 1]) ? "*" + expression[i] : expression[i];
+                }
+                else if (i < expression.length - 1 && expression[i] === ")") {
+                    newExpression += expression[i] + "*";
+                }
+                else {
+                    newExpression += expression[i];
+                }
+            }
+            else {
+                newExpression += expression[i];
+            }
+        }
+        return newExpression;
     }
 
     findAllOccurrences(string, substring) {
