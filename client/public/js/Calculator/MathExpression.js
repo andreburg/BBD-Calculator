@@ -3,8 +3,8 @@ import { operations, functions } from "./MathConstants.js";
 export default class MathExpression {
     constructor(expression) {
         this.expression = this.formatBrackets(this.clean(expression));
-        console.log(this.expression);
         const t = this.tokenize();
+        console.log(t);
         if (t.le) {
             this.le = new MathExpression(t.le);
             this.re = new MathExpression(t.re);
@@ -13,12 +13,11 @@ export default class MathExpression {
     }
 
     clean = (expression) => {
-        if (expression[0] == "(" && expression[expression.length - 1] == ")") {
-            return expression.substring(1, expression.length - 1);
+        let brackets = this.getMatchingBrackets(expression);
+        if (brackets) {
+            if (brackets.find((b) => b[0] == 0 && b[1] == (expression.length - 1))) return this.clean(expression.substring(1, expression.length - 1));
         }
-        else {
-            return expression;
-        }
+        return expression;
     }
 
     tokenize = () => {
@@ -84,10 +83,6 @@ export default class MathExpression {
             else if (expression[i] == ")") {
                 if (stack.length > 0) brackets.push([stack.pop(), i])
                 else return null;
-
-                if (brackets[brackets.length - 1][0] == 0 && brackets[brackets.length - 1][1] == expression.length - 1) {
-                    brackets.pop();
-                }
             }
         }
         return (stack.length === 0) ? brackets : null;
@@ -95,24 +90,29 @@ export default class MathExpression {
 
     formatBrackets(expression) {
         let brackets = this.getMatchingBrackets(expression);
-        let newExpression = "";
-        for (let i = 0; i < expression.length; i++) {
-            if (!brackets.find(b => i < b[1] && i > b[0])) {
-                if (i > 0 && expression[i] === "(") {
-                    newExpression += !isNaN(expression[i - 1]) ? "*" + expression[i] : expression[i];
-                }
-                else if (i < expression.length - 1 && expression[i] === ")") {
-                    newExpression += expression[i] + "*";
+        if (brackets) {
+            let newExpression = "";
+            for (let i = 0; i < expression.length; i++) {
+                if (!brackets.find(b => i < b[1] && i > b[0])) {
+                    if (i > 0 && expression[i] === "(") {
+                        newExpression += !isNaN(expression[i - 1]) ? "*" + expression[i] : expression[i];
+                    }
+                    else if (i < expression.length - 1 && expression[i] === ")") {
+                        newExpression += expression[i];
+                        if (expression[i + 1] !== ")") newExpression += "*";
+                    }
+                    else {
+                        newExpression += expression[i];
+                    }
                 }
                 else {
                     newExpression += expression[i];
                 }
             }
-            else {
-                newExpression += expression[i];
-            }
+            return newExpression;
         }
-        return newExpression;
+
+        return expression;
     }
 
     findAllOccurrences(string, substring) {
