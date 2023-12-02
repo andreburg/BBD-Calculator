@@ -1,7 +1,8 @@
 import Component from "../Component.js";
+import State from "../../State/State.js";
 
-export default class NavButton extends Component{
-    constructor(params){
+export default class NavButton extends Component {
+    constructor(params) {
         super(params);
         this.text = params.text;
         this.url = params.url;
@@ -9,13 +10,13 @@ export default class NavButton extends Component{
         this.classes.Element = "NavBtn";
     }
 
-    navigate(){
+    navigate() {
         window.history.pushState(null, null, this.url);
         let reRoute = new Event("reRoute");
         dispatchEvent(reRoute);
     }
 
-    sideEffects(){
+    sideEffects() {
         let nBtn = document.querySelector(`#${this.text}-navBtn`);
         nBtn.style.cursor = "pointer";
         nBtn.addEventListener("click", (e) => {
@@ -24,10 +25,10 @@ export default class NavButton extends Component{
         })
     }
 
-    getHtml(){
-        if(this.url == "/" + window.location.href.match(/:\/\/[a-zA-Z0-9:]*\/(.*)/)[1]){
+    getHtml() {
+        if (this.url == "/" + window.location.href.match(/:\/\/[a-zA-Z0-9:]*\/(.*)/)[1]) {
             this.classes.Active = "NavBtn-active-true";
-        }else{
+        } else {
             this.classes.Active = "NavBtn-active-false";
         }
         let c = "";

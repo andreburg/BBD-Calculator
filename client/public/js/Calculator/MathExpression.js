@@ -4,6 +4,7 @@ export default class MathExpression {
     constructor(expression) {
         this.expression = formatBrackets(clean(expression));
         this.token = this.tokenize(this.expression);
+        console.log(this.token);
     }
 
     getVal() {

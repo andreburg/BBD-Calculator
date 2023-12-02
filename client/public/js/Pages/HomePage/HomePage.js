@@ -1,10 +1,11 @@
-import NavButton from "../../Components/Nav/NavButton.js";
+import Nav from "../../Components/Nav/Nav.js";
 import Page from "../Page.js";
+import State from "../../State/State.js";
 
 export default class HomePage extends Page {
     constructor(params) {
         super(params);
-        this.comps.Add("nav", new NavButton({text:"Home", url:"/home"}))
+        this.comps.Add("nav", new Nav())
     };
 
     getHtml() {

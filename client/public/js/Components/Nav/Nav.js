@@ -1,14 +1,14 @@
 import Component from "../Component.js";
 import NavButton from "./NavButton.js";
-import NavProfile from "./Profile/NavProfile.js";
 
 export default class Nav extends Component {
     constructor(params) {
         super(params);
         this.comps.Add("HomeNav", new NavButton({ text: "Home", url: "/home" }));
+        this.comps.Add("CalculatorNav", new NavButton({ text: "Calculator", url: "/calculator" }));
     }
 
-    async getHtml() {
+    getHtml() {
         return `
         <nav id="NAV" style="user-select: none;">
             <div>
@@ -16,6 +16,7 @@ export default class Nav extends Component {
             </div>
             <div>
                 ${this.comps.Render("HomeNav")}
+                ${this.comps.Render("CalculatorNav")}
             </div>
         </nav>
         `;
