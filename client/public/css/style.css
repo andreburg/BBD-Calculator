@@ -279,4 +279,13 @@ body {
         min-width: 250px;
         padding: 1rem;
     }
+
+    .calc-history-item {
+        font-size: 12px;
+    }
+    
+    .calc-history-collection {
+        width: 100%;
+    }
+    
 }
