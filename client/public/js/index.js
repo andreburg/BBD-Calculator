@@ -1,7 +1,6 @@
 import Route from "./Routes/Route.js";
 import Router from "./Routes/Router.js";
 
-import HomePage from "./Pages/HomePage/HomePage.js";
 import CalculatorPage from "./Pages/CalculatorPage/CalculatorPage.js";
 
 let path, pathItems;
@@ -9,9 +8,9 @@ let path, pathItems;
 const app = document.querySelector("#app");
 
 const router = new Router([
-    new Route("/home", new HomePage()),
-    new Route("/", new HomePage()),
+    new Route("/", new CalculatorPage()),
     new Route("/calculator", new CalculatorPage()),
+    new Route("/history", new CalculatorPage()),
 ]);
 
 const route = () => {

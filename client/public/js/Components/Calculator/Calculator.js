@@ -37,16 +37,30 @@ export default class Calculator extends Component {
             text: "AC", val: "AC", name: "calcbtnclear", func: () => {
                 this.globalState.notifyChange({
                     calculator: {
+                        ...this.globalState.state.calculator,
                         expression: {
                             input: "",
-                            output: ""
+                            output: "",
+                            display: "input"
                         }
                     }
                 });
             }
         }));
 
-
+        this.comps.Add("calcbtndelete", new CalculatorButton({
+            text: "DEL", val: "DEL", name: "calcbtndelete", func: () => {
+                this.globalState.notifyChange({
+                    calculator: {
+                        ...this.globalState.state.calculator,
+                        expression: {
+                            ...this.globalState.state.calculator.expression,
+                            input: `${this.globalState.state.calculator.expression.input}`.slice(0, -1)
+                        }
+                    }
+                });
+            }
+        }));
 
         this.comps.Add("calcbtn0", new CalculatorButton({ text: "0", val: "0", name: "calcbtn0" }));
         this.comps.Add("calcbtn1", new CalculatorButton({ text: "1", val: "1", name: "calcbtn1" }));
@@ -93,26 +107,27 @@ export default class Calculator extends Component {
                 </div>
                 <div class="calc-btn-grid">
                     <div class="calc-btn-number-grid">
-                        ${this.comps.Render("calcbtn9")}
-                        ${this.comps.Render("calcbtn8")}
                         ${this.comps.Render("calcbtn7")}
-                        ${this.comps.Render("calcbtn6")}
-                        ${this.comps.Render("calcbtn5")}
+                        ${this.comps.Render("calcbtn8")}
+                        ${this.comps.Render("calcbtn9")}
                         ${this.comps.Render("calcbtn4")}
-                        ${this.comps.Render("calcbtn3")}
-                        ${this.comps.Render("calcbtn2")}
+                        ${this.comps.Render("calcbtn5")}
+                        ${this.comps.Render("calcbtn6")}
                         ${this.comps.Render("calcbtn1")}
+                        ${this.comps.Render("calcbtn2")}
+                        ${this.comps.Render("calcbtn3")}
                         ${this.comps.Render("calcbtn0")}
                     </div>
                     <div class="calc-btn-operations-grid">
+                        ${this.comps.Render("calcbtnclear")}
+                        ${this.comps.Render("calcbtndelete")}
                         ${this.comps.Render("calcbtnopenb")}
                         ${this.comps.Render("calcbtncloseb")}
-                        ${this.comps.Render("calcbtnplus")}
-                        ${this.comps.Render("calcbtnminus")}
                         ${this.comps.Render("calcbtnmult")}
                         ${this.comps.Render("calcbtndivide")}
+                        ${this.comps.Render("calcbtnplus")}
+                        ${this.comps.Render("calcbtnminus")}
                         ${this.comps.Render("calcbtncalculate")}
-                        ${this.comps.Render("calcbtnclear")}
                     </div>
                 </div>
             </div>
