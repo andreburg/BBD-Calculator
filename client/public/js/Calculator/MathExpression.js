@@ -1,16 +1,18 @@
-import { tokenizeMathFunction, tokenizeMathOperation, clean, formatBrackets } from "./bbdMathTextParser.js";
+import { tokenizeMathFunction, tokenizeMathOperation, clean, formatBrackets, replaceMathConstants } from "./bbdMathTextParser.js";
 
 export default class MathExpression {
     constructor(expression) {
-        this.expression = formatBrackets(clean(expression));
+        this.expression = replaceMathConstants(formatBrackets(clean(expression)));
         this.token = this.tokenize(this.expression);
     }
 
     getVal() {
-        if (this.token)
+        if (this.token) {
             return this.token.operation ? this.token.operation(new MathExpression(this.token.le).getVal(), new MathExpression(this.token.re).getVal()) : this.expression;
-        else
+        }
+        else {
             return undefined;
+        }
     }
 
     tokenize = () => {

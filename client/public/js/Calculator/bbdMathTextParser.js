@@ -1,4 +1,4 @@
-import { functions, operations } from "./bbdMath.js";
+import { functions, operations, mathConstants } from "./bbdMath.js";
 
 export const clean = (expression) => {
     try {
@@ -15,29 +15,31 @@ export const clean = (expression) => {
 export const tokenizeMathOperation = (expression) => {
     try {
         for (let op in operations) {
-            let ops = findAllOccurrences(expression, op);
+            if (op != "f") {
+                let ops = findAllOccurrences(expression, op);
 
-            for (let i = 0; i < ops.length; i++) {
+                for (let i = 0; i < ops.length; i++) {
 
-                let index = ops[i];
-                if (index > -1) {
-                    let brackets = getMatchingBrackets(expression);
-                    let valid = true;
+                    let index = ops[i];
+                    if (index > -1) {
+                        let brackets = getMatchingBrackets(expression);
+                        let valid = true;
 
-                    if (brackets) {
-                        for (let j = 0; j < brackets.length; j++) {
-                            if (!(index > brackets[j][1] || index < brackets[j][0])) {
-                                valid = false;
+                        if (brackets) {
+                            for (let j = 0; j < brackets.length; j++) {
+                                if (!(index > brackets[j][1] || index < brackets[j][0])) {
+                                    valid = false;
+                                }
                             }
+
+                            if (valid) return (
+                                {
+                                    le: clean(expression.slice(0, index)),
+                                    re: clean(expression.slice(index + 1)),
+                                    operation: operations[op]
+                                }
+                            );
                         }
-
-                        if (valid) return (
-                            {
-                                le: clean(expression.slice(0, index)),
-                                re: clean(expression.slice(index + 1)),
-                                operation: operations[op]
-                            }
-                        );
                     }
                 }
             }
@@ -55,6 +57,7 @@ export const tokenizeMathFunction = (expression) => {
             for (let i = 0; i < funcs.length; i++) {
                 let index = funcs[i];
                 let exact = true;
+                //console.log(func);
 
                 if (index > 0)
                     if (/^[a-zA-Z]$/.test(expression[index - 1])) exact = false;
@@ -119,13 +122,13 @@ export const formatBrackets = (expression) => {
                 if (!brackets.find(b => i < b[1] && i > b[0])) {
                     if (i >= 0 && i < expression.length - 1) {
                         if (isNaN(expression[i]) && !isNaN(expression[i + 1])) {
-                            newExpression += (expression[i] !== "(" && ignoreOperations) ? expression[i] + "*" : expression[i];
+                            newExpression += (expression[i] !== "(" && expression[i] !== "." && ignoreOperations) ? expression[i] + "*" : expression[i];
                         }
                         else if (!isNaN(expression[i]) && isNaN(expression[i + 1])) {
-                            newExpression += (expression[i + 1] !== ")" && ignoreOperations) ? expression[i] + "*" : expression[i];
+                            newExpression += (expression[i + 1] !== ")" && expression[i + 1] !== "." && ignoreOperations) ? expression[i] + "*" : expression[i];
                         }
                         else if (expression[i] === ")" && i < expression.length) {
-                            newExpression += (expression[i + 1] !== ")" && ignoreOperations) ? expression[i] + "*" : expression[i];
+                            newExpression += (expression[i + 1] !== ")" && expression[i + 1] !== "." && ignoreOperations) ? expression[i] + "*" : expression[i];
                         }
                         else {
                             newExpression += expression[i]
@@ -195,5 +198,32 @@ export const findAllOccurrences = (string, substring) => {
     catch
     {
         return null
+    }
+}
+
+export const replaceMathConstants = (expression) => {
+    try {
+        for (let constant in mathConstants) {
+            let consts = findAllOccurrences(expression, constant);
+            consts.reverse();
+            consts.forEach(c => {
+                let valid = true;
+                if (c > 0) {
+                    if (/[a-zA-Z]/.test(expression[c - 1])) valid = false;
+                }
+
+                if (c < expression.length - 1 - constant.length) {
+                    if (/[a-zA-Z]/.test(expression[c + constant.length + 1])) valid = false;
+                }
+
+                if (valid) {
+                    expression = expression.slice(0, c) + mathConstants[constant]() + expression.slice(c + constant.length);
+                }
+            });
+        }
+        return expression
+    }
+    catch (e) {
+        return expression;
     }
 }

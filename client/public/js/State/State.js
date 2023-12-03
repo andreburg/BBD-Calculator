@@ -4,19 +4,30 @@ export default class State {
             if (params.listener) State.instance.listeners = [...State.instance.listeners, params.listener];
             return State.instance;
         }
-
         State.instance = this;
-        State.instance.state = {
-            "calculator": {
-                "expression": {
-                    "input": "",
-                    "output": "",
-                    "display": ""
+        if (localStorage.getItem('state')) {
+            State.instance.state = JSON.parse(localStorage.getItem('state'));
+        }
+        else {
+            State.instance.state = {
+                "calculator": {
+                    "expression": {
+                        "input": "",
+                        "output": "",
+                        "display": ""
+                    },
+                    "history": [],
+                    "buttonState": {
+                        inverse: true
+                    }
                 },
-                "history": []
-            }
-        };
+                "page": {
+                    darkmode: true
+                }
+            };
+        }
         State.instance.listeners = params.listener ? [params.listener] : [];
+        localStorage.setItem('state', JSON.stringify(State.instance.state));
     }
 
     notifyChange(obj) {
@@ -24,9 +35,12 @@ export default class State {
         State.instance.listeners.forEach(l => {
             l();
         });
+        localStorage.setItem('state', JSON.stringify(State.instance.state));
+        dispatchEvent(new Event("Render"));
     }
 
     silentChange(obj) {
         State.instance.state = { ...State.instance.state, ...obj }
+        localStorage.setItem('state', JSON.stringify(State.instance.state));
     }
 }

@@ -9,6 +9,25 @@ export default class CalculatorButton extends Component {
         this.name = params.name;
         this.globalState = new State({});
         this.func = params.func;
+        this.class = params.class;
+
+        this.handle = () => {
+            if (this.func) {
+                this.func();
+            } else {
+                this.globalState.notifyChange({
+                    ...this.globalState.state,
+                    calculator: {
+                        ...this.globalState.state.calculator,
+                        expression: {
+                            ...this.globalState.state.calculator.expression,
+                            input: this.globalState.state.calculator.expression ? this.globalState.state.calculator.expression.input + this.calcVal : this.calcVal,
+                            display: "input"
+                        }
+                    }
+                });
+            }
+        }
     }
 
     sideEffects() {
@@ -19,6 +38,7 @@ export default class CalculatorButton extends Component {
                 this.func();
             } else {
                 this.globalState.notifyChange({
+                    ...this.globalState.state,
                     calculator: {
                         ...this.globalState.state.calculator,
                         expression: {
@@ -34,7 +54,7 @@ export default class CalculatorButton extends Component {
 
     getHtml() {
         return `
-        <div id="${this.name}-calcButton" style="user-select: none;" class="calc-btn">
+        <div id="${this.name}-calcButton" style="user-select: none;" class="calc-btn ${this.class ? this.class : ""}">
             ${this.text}
         </div>
         `;

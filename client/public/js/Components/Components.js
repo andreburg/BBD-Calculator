@@ -4,7 +4,7 @@ export default class Components {
     }
 
     Add(name, comp) {
-        this.comps.push({ Name: name, Component: comp });
+        this.comps.push({ Name: name, Component: comp, Active: false });
     }
 
     Render(name) {
@@ -12,6 +12,7 @@ export default class Components {
         if (!c) {
             c = new Component();
         }
+        c.Active = true;
         return c.Component.getHtml();
     }
 
@@ -25,7 +26,8 @@ export default class Components {
 
     loadComponents() {
         this.comps.forEach(c => {
-            c.Component.sideEffects();
+            if (c.Active)
+                c.Component.sideEffects();
         });
     }
 }
