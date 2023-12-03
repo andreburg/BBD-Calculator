@@ -36,6 +36,7 @@ export default class Calculator extends Component {
 
     getHtml() {
         this.inverse = this.globalState.state.calculator.buttonState.inverse;
+        this.degrees = this.globalState.state.calculator.buttonState.degrees;
         this.comps = new Components();
         this.initComponents();
         return `
@@ -51,9 +52,12 @@ export default class Calculator extends Component {
                         ${this.comps.Render("calcbtnln")}
                         ${this.comps.Render("calcbtneuler")}
                         ${this.comps.Render("calcbtnpi")}
+                        ${this.comps.Render("calcbtnopenb")}
+                        ${this.comps.Render("calcbtncloseb")}
                     </div>
                     <div class="calc-btn-settings-grid">
                         ${this.comps.Render("calcbtninverse")}
+                        ${this.comps.Render("calcbtndegrees")}
                     </div>
                     <div class="calc-btn-number-grid">
                         ${this.comps.Render("calcbtn7")}
@@ -66,18 +70,17 @@ export default class Calculator extends Component {
                         ${this.comps.Render("calcbtn2")}
                         ${this.comps.Render("calcbtn3")}
                         ${this.comps.Render("calcbtn0")}
+                        ${this.comps.Render("calcbtndecimal")}
                     </div>
                     <div class="calc-btn-operations-grid">
                         ${this.comps.Render("calcbtnclear")}
                         ${this.comps.Render("calcbtndelete")}
-                        ${this.comps.Render("calcbtnopenb")}
-                        ${this.comps.Render("calcbtncloseb")}
                         ${this.comps.Render("calcbtnmult")}
                         ${this.comps.Render("calcbtndivide")}
                         ${this.comps.Render("calcbtnplus")}
                         ${this.comps.Render("calcbtnminus")}
+                        ${this.comps.Render("calcbtnpower")}
                         ${this.comps.Render("calcbtncalculate")}
-                        ${this.comps.Render("calcbtndecimal")}
                     </div>
                 </div>
             </div>
@@ -85,6 +88,7 @@ export default class Calculator extends Component {
     }
 
     initComponents() {
+        this.comps.Add("calcbtnpower", new CalculatorButton({ text: "^", val: "^", name: "calcbtnpower" }));
         this.comps.Add("calcbtndecimal", new CalculatorButton({ text: ".", val: ".", name: "calcbtndecimal" }));
         this.comps.Add("calcbtninverse", new CalculatorButton({
             text: "inv", val: "inv", name: "calcbtninverse", class: `inverse-btn-${this.inverse}`, func: () => {
@@ -93,7 +97,22 @@ export default class Calculator extends Component {
                     calculator: {
                         ...this.globalState.state.calculator,
                         buttonState: {
+                            ...this.globalState.state.calculator.buttonState,
                             inverse: !this.globalState.state.calculator.buttonState.inverse
+                        }
+                    }
+                });
+            }
+        }));
+        this.comps.Add("calcbtndegrees", new CalculatorButton({
+            text: "deg", val: "deg", name: "calcbtndegrees", class: `degree-btn-${this.degrees}`, func: () => {
+                this.globalState.notifyChange({
+                    ...this.globalState.state,
+                    calculator: {
+                        ...this.globalState.state.calculator,
+                        buttonState: {
+                            ...this.globalState.state.calculator.buttonState,
+                            degrees: !this.globalState.state.calculator.buttonState.degrees
                         }
                     }
                 });

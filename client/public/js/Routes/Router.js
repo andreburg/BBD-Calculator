@@ -8,7 +8,7 @@ export default class Router {
     }
 
     LoadRoute(url) {
-        let route = this.routes.find(r => r.route == "/" + url);
+        let route = this.routes.find(r => r.route == url);
         route = route ? route : this.notFound;
         return route;
     }

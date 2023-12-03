@@ -18,7 +18,8 @@ export default class State {
                     },
                     "history": [],
                     "buttonState": {
-                        inverse: true
+                        inverse: true,
+                        degrees: true
                     }
                 },
                 "page": {

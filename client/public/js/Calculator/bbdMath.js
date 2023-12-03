@@ -1,5 +1,7 @@
 import MathExpression from "./MathExpression.js";
 import State from "../State/State.js";
+let globalState = new State({});
+let degrees = () => globalState.state.calculator.buttonState.degrees ? (Math.PI / 180) : 1;
 
 export const operations = {
     "-": (l, r) => new Number(l) - new Number(r),
@@ -12,12 +14,12 @@ export const operations = {
 }
 
 export const functions = {
-    "cosec": (val) => Math.asin(val) / (Math.PI / 180),
-    "sec": (val) => Math.acos(val) / (Math.PI / 180),
-    "cot": (val) => Math.atan(val) / (Math.PI / 180),
-    "sin": (val) => Math.sin(val * Math.PI / 180.0),
-    "cos": (val) => Math.cos(val * Math.PI / 180.0),
-    "tan": (val) => Math.tan(val * Math.PI / 180.0),
+    "cosec": (val) => Math.asin(val) / degrees(),
+    "sec": (val) => Math.acos(val) / degrees(),
+    "cot": (val) => Math.atan(val) / degrees(),
+    "sin": (val) => Math.sin(val * degrees()),
+    "cos": (val) => Math.cos(val * degrees()),
+    "tan": (val) => Math.tan(val * degrees()),
     "ln": (val) => Math.log(val),
     "g": (val) => new MathExpression("2(x)+2".replace(/x/g, val)).getVal(),
     "sqrt": (val) => new MathExpression("(x)^(1/2)".replace(/x/g, val)).getVal(),
