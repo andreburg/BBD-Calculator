@@ -18,19 +18,19 @@ body {
     display: grid;
     grid-template-rows: repeat(1, 1fr);
     grid-template-columns: repeat(3, 1fr);
+}
 
-    >div {
-        display: flex;
-        justify-content: space-evenly;
-        margin-left: 10%;
-        margin-right: 10%;
+#NAV>div {
+    display: flex;
+    justify-content: space-evenly;
+    margin-left: 10%;
+    margin-right: 10%;
+}
 
-        >div {
-            list-style-type: none;
-            justify-content: center;
-            text-align: center;
-        }
-    }
+#NAV>div>div {
+    list-style-type: none;
+    justify-content: center;
+    text-align: center;
 }
 
 .Container100 {
@@ -112,4 +112,14 @@ body {
     text-align: center;
     margin-bottom: 2rem;
     border-radius: 1rem;
+}
+
+.calc-input-text{
+    border: 0;
+    background-color: transparent;
+    font-size: 2rem;
+}
+
+.calc-input-text:focus {
+    outline: none;
 }

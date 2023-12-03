@@ -14,17 +14,23 @@ export default class Calculator extends Component {
         this.comps.Add("calcbtncloseb", new CalculatorButton({ text: ")", val: ")", name: "calcbtncloseb" }));
         this.comps.Add("calcbtncalculate", new CalculatorButton({
             text: "=", val: "=", name: "calcbtncalculate", func: () => {
-                this.globalState.notifyChange({
+                this.globalState.silentChange({
                     calculator: {
                         expression: {
+                            ...this.globalState.state.expression,
                             output: new MathExpression(this.globalState.state.calculator.expression.input).getVal(),
-                            input: this.globalState.state.calculator.expression.input
-                        },
-                        history: this.globalState.state.calculator.history ? [...this.globalState.state.calculator.history, this.globalState.state.calculator.expression] : [this.globalState.state.calculator.expression]
+                            input: this.globalState.state.calculator.expression.input,
+                            display: "output"
+                        }
                     }
                 });
 
-                console.log(this.globalState.state.calculator.expression);
+                this.globalState.notifyChange({
+                    calculator: {
+                        ...this.globalState.state.calculator,
+                        history: this.globalState.state.calculator.history ? [...this.globalState.state.calculator.history, this.globalState.state.calculator.expression] : [this.globalState.state.calculator.expression]
+                    }
+                })
             }
         }));
         this.comps.Add("calcbtnclear", new CalculatorButton({
@@ -41,6 +47,7 @@ export default class Calculator extends Component {
         }));
 
 
+
         this.comps.Add("calcbtn0", new CalculatorButton({ text: "0", val: "0", name: "calcbtn0" }));
         this.comps.Add("calcbtn1", new CalculatorButton({ text: "1", val: "1", name: "calcbtn1" }));
         this.comps.Add("calcbtn2", new CalculatorButton({ text: "2", val: "2", name: "calcbtn2" }));
@@ -53,7 +60,6 @@ export default class Calculator extends Component {
         this.comps.Add("calcbtn9", new CalculatorButton({ text: "9", val: "9", name: "calcbtn9" }));
 
         const stateChanged = () => {
-            this.globalState = new State({})
             this.RENDER();
         }
 
@@ -62,36 +68,51 @@ export default class Calculator extends Component {
         })
     }
 
+    sideEffects() {
+        let tbx = document.querySelector(".calc-input-text");
+        tbx.addEventListener("focusout", (e) => {
+            this.globalState.silentChange({
+                calculator: {
+                    ...this.globalState.state.calculator,
+                    expression: {
+                        ...this.globalState.state.calculator.expression,
+                        input: tbx.value,
+                        display: "input"
+                    }
+                }
+            });
+        })
+        this.comps.loadComponents();
+    }
+
     getHtml() {
         return `
             <div class="calc-container">
                 <div class="calc-expression-container">
-                    <div>
-                        ${this.globalState.state.calculator.expression.output ? this.globalState.state.calculator.expression.output : this.globalState.state.calculator.expression.input}
-                    </div>
+                    <input class="calc-input-text" value="${this.globalState.state.calculator.expression[this.globalState.state.calculator.expression.display]}"/>
                 </div>
                 <div class="calc-btn-grid">
                     <div class="calc-btn-number-grid">
-                    ${this.comps.Render("calcbtn9")}
-                    ${this.comps.Render("calcbtn8")}
-                    ${this.comps.Render("calcbtn7")}
-                    ${this.comps.Render("calcbtn6")}
-                    ${this.comps.Render("calcbtn5")}
-                    ${this.comps.Render("calcbtn4")}
-                    ${this.comps.Render("calcbtn3")}
-                    ${this.comps.Render("calcbtn2")}
-                    ${this.comps.Render("calcbtn1")}
-                    ${this.comps.Render("calcbtn0")}
+                        ${this.comps.Render("calcbtn9")}
+                        ${this.comps.Render("calcbtn8")}
+                        ${this.comps.Render("calcbtn7")}
+                        ${this.comps.Render("calcbtn6")}
+                        ${this.comps.Render("calcbtn5")}
+                        ${this.comps.Render("calcbtn4")}
+                        ${this.comps.Render("calcbtn3")}
+                        ${this.comps.Render("calcbtn2")}
+                        ${this.comps.Render("calcbtn1")}
+                        ${this.comps.Render("calcbtn0")}
                     </div>
                     <div class="calc-btn-operations-grid">
-                    ${this.comps.Render("calcbtnopenb")}
-                    ${this.comps.Render("calcbtncloseb")}
-                    ${this.comps.Render("calcbtnplus")}
-                    ${this.comps.Render("calcbtnminus")}
-                    ${this.comps.Render("calcbtnmult")}
-                    ${this.comps.Render("calcbtndivide")}
-                    ${this.comps.Render("calcbtncalculate")}
-                    ${this.comps.Render("calcbtnclear")}
+                        ${this.comps.Render("calcbtnopenb")}
+                        ${this.comps.Render("calcbtncloseb")}
+                        ${this.comps.Render("calcbtnplus")}
+                        ${this.comps.Render("calcbtnminus")}
+                        ${this.comps.Render("calcbtnmult")}
+                        ${this.comps.Render("calcbtndivide")}
+                        ${this.comps.Render("calcbtncalculate")}
+                        ${this.comps.Render("calcbtnclear")}
                     </div>
                 </div>
             </div>

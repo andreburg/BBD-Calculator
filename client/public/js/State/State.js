@@ -10,7 +10,8 @@ export default class State {
             "calculator": {
                 "expression": {
                     "input": "",
-                    "output": ""
+                    "output": "",
+                    "display": ""
                 },
                 "history": []
             }
@@ -23,5 +24,9 @@ export default class State {
         State.instance.listeners.forEach(l => {
             l();
         });
+    }
+
+    silentChange(obj) {
+        State.instance.state = { ...State.instance.state, ...obj }
     }
 }

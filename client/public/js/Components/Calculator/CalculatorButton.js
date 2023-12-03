@@ -20,8 +20,11 @@ export default class CalculatorButton extends Component {
             } else {
                 this.globalState.notifyChange({
                     calculator: {
+                        ...this.globalState.state.calculator,
                         expression: {
-                            input: this.globalState.state.calculator.expression ? this.globalState.state.calculator.expression.input + this.calcVal : this.calcVal
+                            ...this.globalState.state.calculator.expression,
+                            input: this.globalState.state.calculator.expression ? this.globalState.state.calculator.expression.input + this.calcVal : this.calcVal,
+                            display: "input"
                         }
                     }
                 });
@@ -31,7 +34,7 @@ export default class CalculatorButton extends Component {
 
     getHtml() {
         return `
-        <div id="${this.name}-calcButton" class="calc-btn">
+        <div id="${this.name}-calcButton" style="user-select: none;" class="calc-btn">
             ${this.text}
         </div>
         `;
