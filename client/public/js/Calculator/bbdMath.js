@@ -12,9 +12,9 @@ export const operations = {
 }
 
 export const functions = {
-    "cosec": (val) => Math.asin(val * Math.PI / 180.0),
-    "sec": (val) => Math.acos(val * Math.PI / 180.0),
-    "cot": (val) => Math.atan(val * Math.PI / 180.0),
+    "cosec": (val) => Math.asin(val) / (Math.PI / 180),
+    "sec": (val) => Math.acos(val) / (Math.PI / 180),
+    "cot": (val) => Math.atan(val) / (Math.PI / 180),
     "sin": (val) => Math.sin(val * Math.PI / 180.0),
     "cos": (val) => Math.cos(val * Math.PI / 180.0),
     "tan": (val) => Math.tan(val * Math.PI / 180.0),
