@@ -149,13 +149,15 @@ export default class Calculator extends Component {
         this.comps.Add("calcbtncloseb", new CalculatorButton({ text: ")", val: ")", name: "calcbtncloseb" }));
         this.comps.Add("calcbtncalculate", new CalculatorButton({
             text: "=", val: "=", name: "calcbtncalculate", func: () => {
+                let newNum = new Number(new MathExpression(this.globalState.state.calculator.expression.input).getVal());
+                if(!/^[0-9]*$/.test(newNum)) newNum = undefined;
                 this.globalState.silentChange({
                     ...this.globalState.state,
                     calculator: {
                         ...this.globalState.state.calculator,
                         expression: {
                             ...this.globalState.state.expression,
-                            output: new MathExpression(this.globalState.state.calculator.expression.input).getVal(),
+                            output: newNum,
                             input: this.globalState.state.calculator.expression.input,
                             display: "output"
                         }

@@ -42,7 +42,6 @@ export default class NavButton extends Component {
         Object.values(this.classes).forEach(e => {
             c += ` ${e}`;
         });
-        console.log(c);
         return `
         <div id="${this.text}-navBtn" class="${c}">
             ${this.text}
