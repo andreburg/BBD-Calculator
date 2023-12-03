@@ -1,3 +1,10 @@
+:root {
+    --dark-c: rgb(30, 30, 30);
+    --light-c: rgb(217, 217, 217);
+    --light-dark-c: rgb(46, 46, 46);
+    --lighter-dark-c: rgb(51, 51, 51);
+}
+
 html,
 body {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -17,8 +24,8 @@ body {
 #NAV {
     padding-top: 2rem;
     padding-bottom: 2rem;
-    margin-left: 20%;
-    margin-right: 20%;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
 }
 
 #NAV>div {
@@ -34,14 +41,19 @@ body {
     text-align: center;
 }
 
+#nav-settings {
+    display: flex;
+    justify-content: right;
+}
+
 .darkmode-true {
-    background-color: rgb(30, 30, 30);
-    color: white;
+    background-color: var(--dark-c);
+    color: var(--light-c);
 }
 
 .darkmode-false .darkmode-undefined {
-    background-color: white;
-    color: rgb(30, 30, 30);
+    background-color: var(--light-c);
+    color: var(--dark-c);
 }
 
 
@@ -52,9 +64,32 @@ body {
     text-align: center;
 }
 
+#themeToggle {
+    padding: 1rem;
+    border-radius: 1rem;
+}
+
+.themetoggle-darkmode-true {
+    background-color: var(--light-c);
+    color: var(--dark-c);
+}
+
+.themetoggle-darkmode-false {
+    background-color: var(--dark-c);
+    color: var(--light-c);
+}
+
+.NavBtn-darkmode-true {
+    border-color: var(--light-c);
+}
+
+.NavBtn-darkmode-false {
+    border-color: black;
+}
+
 .NavBtn-active-true {
     border: 1px solid transparent;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid;
 }
 
 .NavBtn-active-false {
@@ -80,10 +115,10 @@ body {
     width: 50%;
     text-align: center;
     display: block;
-    background-color: rgb(51, 51, 51);
+    background-color: var(--lighter-dark-c);
     padding: 3rem;
     border-radius: 3rem;
-    color: white;
+    color: var(--light-c);
 }
 
 #history-page {
@@ -138,12 +173,12 @@ body {
     padding-right: 1rem;
     overflow-x: scroll;
     overflow-y: hidden;
-    background-color: rgb(46, 46, 46);
+    background-color: var(--light-dark-c);
     text-align: center;
     margin-bottom: 2rem;
     border-radius: 1rem;
     width: 100;
-    color: white;
+    color: var(--light-c);
 }
 
 .calc-input-text {
@@ -151,7 +186,7 @@ body {
     background-color: transparent;
     font-size: 25px;
     text-align: center;
-    color: white;
+    color: var(--light-c);
 }
 
 .calc-input-text:focus {
@@ -165,9 +200,9 @@ body {
     font-size: 20px;
     margin: 1rem;
     padding: 2rem;
-    background-color: rgb(46, 46, 46);
+    background-color: var(--light-dark-c);
     border-radius: 2rem;
-    color: white;
+    color: var(--light-c);
 }
 
 .calc-history-item-text {
@@ -192,20 +227,20 @@ body {
 
 .calc-btn {
     text-align: center;
-    background-color: rgb(46, 46, 46);
+    background-color: var(--light-dark-c);
     max-width: 6rem;
     font-size: 18px;
     border-radius: 1rem;
 }
 
 .inverse-btn-true {
-    background-color: white;
-    color: rgb(46, 46, 46);
+    background-color: var(--light-c);
+    color: var(--light-dark-c);
 }
 
 .inverse-btn-false {
-    background-color: rgb(46, 46, 46);
-    color: white;
+    background-color: var(--light-dark-c);
+    color: var(--light-c);
 }
 
 @media (min-width: 400px) {
