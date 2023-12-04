@@ -7,12 +7,7 @@ export default class MathExpression {
     }
 
     getVal() {
-        if (this.token) {
-            return this.token.operation ? this.token.operation(new MathExpression(this.token.le).getVal(), new MathExpression(this.token.re).getVal()) : this.expression;
-        }
-        else {
-            return undefined;
-        }
+        return this.token.operation ? this.token.operation(new MathExpression(this.token.le).getVal(), new MathExpression(this.token.re).getVal()) : this.expression;
     }
 
     tokenize = () => {
