@@ -11,9 +11,15 @@ export default class NavButton extends Component {
     }
 
     navigate() {
-        window.history.pushState(null, null, this.url);
-        let reRoute = new Event("reRoute");
-        dispatchEvent(reRoute);
+        this.globalState.notifyChange({
+            ...this.globalState.state,
+            page: {
+                ...this.globalState.state.page,
+                route: this.url
+            }
+        })
+        //let reRoute = new Event("reRoute");
+        //dispatchEvent(reRoute);
     }
 
     sideEffects() {
@@ -26,7 +32,7 @@ export default class NavButton extends Component {
     }
 
     getHtml() {
-        if (this.url == new URL(window.location.href).pathname) {
+        if (this.globalState.state.page.route == this.url) {
             this.classes.Active = "NavBtn-active-true";
         } else {
             this.classes.Active = "NavBtn-active-false";

@@ -23,7 +23,8 @@ export default class State {
                     }
                 },
                 "page": {
-                    darkmode: true
+                    darkmode: true,
+                    route: "/"
                 }
             };
         }

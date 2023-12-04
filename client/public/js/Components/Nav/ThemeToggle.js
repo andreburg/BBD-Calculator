@@ -16,6 +16,7 @@ export default class ThemeToggle extends Component {
             this.globalState.notifyChange({
                 ...this.globalState.state,
                 page: {
+                    ...this.globalState.state.page,
                     darkmode: !this.globalState.state.page.darkmode
                 }
             })

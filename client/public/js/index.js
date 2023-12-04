@@ -17,8 +17,7 @@ const router = new Router([
 ]);
 
 const route = () => {
-    path = new URL(window.location.href).pathname;
-    let route = router.LoadRoute(path);
+    let route = router.LoadRoute(globalState.state.page.route);
     app.innerHTML = route.comp.getHtml();
     route.comp.sideEffects();
     app.classList.value = `darkmode-${globalState.state.page.darkmode}`

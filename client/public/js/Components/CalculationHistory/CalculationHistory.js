@@ -11,9 +11,15 @@ export default class CalculationHistory extends Component {
     }
 
     navigate() {
-        window.history.pushState(null, null, "/calculator");
-        let reRoute = new Event("reRoute");
-        dispatchEvent(reRoute);
+        this.globalState.notifyChange({
+            ...this.globalState.state,
+            page: {
+                ...this.globalState.state.page,
+                route: "/calculator"
+            }
+        })
+        //let reRoute = new Event("reRoute");
+        //dispatchEvent(reRoute);
     }
 
     sideEffects() {
