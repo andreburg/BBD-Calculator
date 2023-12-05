@@ -31,7 +31,7 @@ export const functions = {
     "cos": (val) => Math.cos(val * degrees()),
     "tan": (val) => Math.tan(val * degrees()),
     "ln": (val) => Math.log(val),
-    "g": (val) => new MathExpression("2(x)+2".replace(/x/g, val)).getVal(),
+    "g": (val) => new MathExpression("2(x)^2+2".replace(/x/g, val)).getVal(),
     "sqrt": (val) => new MathExpression("(x)^(1/2)".replace(/x/g, val)).getVal(),
     "floor": (val) => Math.floor(val),
     "ceil": (val) => Math.floor(val),
@@ -40,5 +40,5 @@ export const functions = {
 
 export const mathConstants = {
     "π": () => Math.PI,
-    "e": () => Math.E
+    "e": () => Math.E,
 }

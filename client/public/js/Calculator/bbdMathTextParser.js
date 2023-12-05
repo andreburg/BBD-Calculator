@@ -4,7 +4,6 @@ export const clean = (expression) => {
     try {
         if (getMatchingBrackets(expression).find((b) => b[0] == 0 && b[1] == (expression.length - 1)))
             return clean(expression.substring(1, expression.length - 1));
-
         return expression.replace(" ", "");
     }
     catch {
@@ -17,9 +16,7 @@ export const tokenizeMathOperation = (expression) => {
         for (let op in operations) {
             if (op != "f") {
                 let ops = findAllOccurrences(expression, op);
-
                 for (let i = 0; i < ops.length; i++) {
-
                     let index = ops[i];
                     if (index > -1) {
                         let brackets = getMatchingBrackets(expression);

@@ -28,15 +28,15 @@ export default class State {
                 }
             };
         }
+
+        if (!State.instance.state.page.route) state.instance.page.route = "/";
+
         State.instance.listeners = params.listener ? [params.listener] : [];
         localStorage.setItem('state', JSON.stringify(State.instance.state));
     }
 
     notifyChange(obj) {
         State.instance.state = { ...State.instance.state, ...obj }
-        State.instance.listeners.forEach(l => {
-            l();
-        });
         localStorage.setItem('state', JSON.stringify(State.instance.state));
         dispatchEvent(new Event("Render"));
     }

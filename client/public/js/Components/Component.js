@@ -20,3 +20,25 @@ export default class Component {
         return "";
     }
 }
+
+export const buildComponent = (componentType, attributes, components, innerText) => {
+    let htmlComponent = document.createElement(componentType);
+
+    for (const attributeKey in attributes) {
+        if (attributes.hasOwnProperty(attributeKey)) {
+            const attributeValue = attributes[attributeKey];
+            htmlComponent.setAttribute(attributeKey, attributeValue);
+        }
+    }
+
+    for (let i = 0; i < components.length; i++) {
+        console.log(components[i]);
+        htmlComponent.appendChild(components[i]);
+    }
+
+    if (innerText) {
+        htmlComponent.innerText = innerText;
+    }
+
+    return htmlComponent;
+}

@@ -1,4 +1,4 @@
-import Component from "../Component.js";
+import Component, { buildComponent } from "../Component.js";
 import CalculatorButton from "./CalculatorButton.js";
 import State from "../../State/State.js";
 import MathExpression from "../../Calculator/MathExpression.js";
@@ -39,52 +39,52 @@ export default class Calculator extends Component {
         this.degrees = this.globalState.state.calculator.buttonState.degrees;
         this.comps = new Components();
         this.initComponents();
-        return `
-            <div class="calc-container">
-                <div class="calc-expression-container">
-                    <input class="calc-input-text" value="${this.globalState.state.calculator.expression[this.globalState.state.calculator.expression.display]}"/>
-                </div>
-                <div class="calc-btn-grid">
-                    <div class="calc-btn-function-grid">
-                        ${this.inverse ? this.comps.Render("calcbtncosec") : this.comps.Render("calcbtnsin")}
-                        ${this.inverse ? this.comps.Render("calcbtnsec") : this.comps.Render("calcbtncos")}
-                        ${this.inverse ? this.comps.Render("calcbtncot") : this.comps.Render("calcbtntan")}
-                        ${this.comps.Render("calcbtnln")}
-                        ${this.comps.Render("calcbtneuler")}
-                        ${this.comps.Render("calcbtnpi")}
-                        ${this.comps.Render("calcbtnopenb")}
-                        ${this.comps.Render("calcbtncloseb")}
-                    </div>
-                    <div class="calc-btn-settings-grid">
-                        ${this.comps.Render("calcbtninverse")}
-                        ${this.comps.Render("calcbtndegrees")}
-                    </div>
-                    <div class="calc-btn-number-grid">
-                        ${this.comps.Render("calcbtn7")}
-                        ${this.comps.Render("calcbtn8")}
-                        ${this.comps.Render("calcbtn9")}
-                        ${this.comps.Render("calcbtn4")}
-                        ${this.comps.Render("calcbtn5")}
-                        ${this.comps.Render("calcbtn6")}
-                        ${this.comps.Render("calcbtn1")}
-                        ${this.comps.Render("calcbtn2")}
-                        ${this.comps.Render("calcbtn3")}
-                        ${this.comps.Render("calcbtn0")}
-                        ${this.comps.Render("calcbtndecimal")}
-                    </div>
-                    <div class="calc-btn-operations-grid">
-                        ${this.comps.Render("calcbtnclear")}
-                        ${this.comps.Render("calcbtndelete")}
-                        ${this.comps.Render("calcbtnmult")}
-                        ${this.comps.Render("calcbtndivide")}
-                        ${this.comps.Render("calcbtnplus")}
-                        ${this.comps.Render("calcbtnminus")}
-                        ${this.comps.Render("calcbtnpower")}
-                        ${this.comps.Render("calcbtncalculate")}
-                    </div>
-                </div>
-            </div>
-        `;
+        return (
+            buildComponent("div", { "class": "calc-container" }, [
+                buildComponent("div", { "class": "calc-expression-container" }, [
+                    buildComponent("input", { "class": "calc-input-text", "value": `${this.globalState.state.calculator.expression[this.globalState.state.calculator.expression.display]}` }, []),
+                ]),
+                buildComponent("div", { "class": "calc-btn-grid" }, [
+                    buildComponent("div", { "class": "calc-btn-function-grid" }, [
+                        this.inverse ? this.comps.Render("calcbtncosec") : this.comps.Render("calcbtnsin"),
+                        this.inverse ? this.comps.Render("calcbtnsec") : this.comps.Render("calcbtncos"),
+                        this.inverse ? this.comps.Render("calcbtncot") : this.comps.Render("calcbtntan"),
+                        this.comps.Render("calcbtnln"),
+                        this.comps.Render("calcbtneuler"),
+                        this.comps.Render("calcbtnpi"),
+                        this.comps.Render("calcbtnopenb"),
+                        this.comps.Render("calcbtncloseb"),
+                    ]),
+                    buildComponent("div", { "class": "calc-btn-settings-grid" }, [
+                        this.comps.Render("calcbtninverse"),
+                        this.comps.Render("calcbtndegrees")
+                    ]),
+                    buildComponent("div", { "class": "calc-btn-number-grid" }, [
+                        this.comps.Render("calcbtn7"),
+                        this.comps.Render("calcbtn8"),
+                        this.comps.Render("calcbtn9"),
+                        this.comps.Render("calcbtn4"),
+                        this.comps.Render("calcbtn5"),
+                        this.comps.Render("calcbtn6"),
+                        this.comps.Render("calcbtn1"),
+                        this.comps.Render("calcbtn2"),
+                        this.comps.Render("calcbtn3"),
+                        this.comps.Render("calcbtn0"),
+                        this.comps.Render("calcbtndecimal")
+                    ]),
+                    buildComponent("div", { "class": "calc-btn-operations-grid" }, [
+                        this.comps.Render("calcbtnclear"),
+                        this.comps.Render("calcbtndelete"),
+                        this.comps.Render("calcbtnmult"),
+                        this.comps.Render("calcbtndivide"),
+                        this.comps.Render("calcbtnplus"),
+                        this.comps.Render("calcbtnminus"),
+                        this.comps.Render("calcbtnpower"),
+                        this.comps.Render("calcbtncalculate")
+                    ])
+                ]),
+            ])
+        )
     }
 
     initComponents() {

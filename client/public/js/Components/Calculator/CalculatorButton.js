@@ -1,4 +1,4 @@
-import Component from "../Component.js";
+import Component, { buildComponent } from "../Component.js";
 import State from "../../State/State.js";
 
 export default class CalculatorButton extends Component {
@@ -10,24 +10,6 @@ export default class CalculatorButton extends Component {
         this.globalState = new State({});
         this.func = params.func;
         this.class = params.class;
-
-        this.handle = () => {
-            if (this.func) {
-                this.func();
-            } else {
-                this.globalState.notifyChange({
-                    ...this.globalState.state,
-                    calculator: {
-                        ...this.globalState.state.calculator,
-                        expression: {
-                            ...this.globalState.state.calculator.expression,
-                            input: this.globalState.state.calculator.expression ? this.globalState.state.calculator.expression.input + this.calcVal : this.calcVal,
-                            display: "input"
-                        }
-                    }
-                });
-            }
-        }
     }
 
     sideEffects() {
@@ -53,10 +35,8 @@ export default class CalculatorButton extends Component {
     }
 
     getHtml() {
-        return `
-        <div id="${this.name}-calcButton" style="user-select: none;" class="calc-btn ${this.class ? this.class : ""}">
-            ${this.text}
-        </div>
-        `;
+        return (
+            buildComponent("div", { "class": "calc-container", "id": `${this.name}-calcButton`, "style": "user-select: none;", "class": `calc-btn ${this.class ? this.class : ""}` }, [], this.text)
+        )
     }
 }
