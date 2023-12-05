@@ -1,4 +1,4 @@
-import Component from "../Component.js";
+import Component, { buildComponent } from "../Component.js";
 import NavButton from "./NavButton.js";
 import ThemeToggle from "./ThemeToggle.js";
 
@@ -11,18 +11,17 @@ export default class Nav extends Component {
     }
 
     getHtml() {
-        return `
-        <nav id="NAV" style="user-select: none;">
-            <div>
-            </div>
-            <div id="nav-router">
-                ${this.comps.Render("CalculatorNav")}
-                ${this.comps.Render("HistoryNav")}
-            </div>
-            <div id="nav-settings">
-                ${this.comps.Render("ThemeToggle")}
-            </div>
-        </nav>
-        `;
+        return (
+            buildComponent("nav", { "id": "NAV", "style": "user-select: none;" }, [
+                buildComponent("div", {}, []),
+                buildComponent("div", { "id": "nav-router" }, [
+                    this.comps.Render("CalculatorNav"),
+                    this.comps.Render("HistoryNav")
+                ]),
+                buildComponent("div", { "id": "nav-settings" }, [
+                    this.comps.Render("ThemeToggle")
+                ])
+            ])
+        )
     }
 }

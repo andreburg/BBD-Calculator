@@ -1,4 +1,4 @@
-import Component from "../Component.js";
+import Component, { buildComponent } from "../Component.js";
 import CalculationHistory from "./CalculationHistory.js";
 import State from "../../State/State.js";
 import Components from "../Components.js";
@@ -10,7 +10,7 @@ export default class CalculationsHistory extends Component {
     }
 
     getCalculations() {
-        let calcs = "";
+        let calcs = [];
         this.comps = new Components();
         let history = this.globalState.state.calculator.history;
         for (let i = 0; i < history.length; i++) {
@@ -20,16 +20,16 @@ export default class CalculationsHistory extends Component {
                 id: i
             }))
 
-            calcs += `${this.comps.Render(`calc-h${i}`)}`;
+            calcs = [...calcs, this.comps.Render(`calc-h${i}`)];
         }
         return calcs;
     }
 
     getHtml() {
-        return `
-        <div class="calc-history-collection">
-            ${this.getCalculations()}
-        </div>
-        `;
+        return (
+            buildComponent("div", { "class": "calc-history-collection" },
+                this.getCalculations()
+            )
+        );
     }
 }

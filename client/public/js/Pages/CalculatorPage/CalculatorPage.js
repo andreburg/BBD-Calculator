@@ -13,6 +13,7 @@ export default class CalculatorPage extends Page {
     getHtml() {
         return (
             buildComponent("div", { "id": "calc-page" }, [
+                this.comps.Render("nav"),
                 this.comps.Render("calculator")
             ])
         )

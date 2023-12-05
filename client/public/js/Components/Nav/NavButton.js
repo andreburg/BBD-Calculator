@@ -1,4 +1,4 @@
-import Component from "../Component.js";
+import Component, { buildComponent } from "../Component.js";
 import State from "../../State/State.js";
 
 export default class NavButton extends Component {
@@ -48,10 +48,8 @@ export default class NavButton extends Component {
         Object.values(this.classes).forEach(e => {
             c += ` ${e}`;
         });
-        return `
-        <div id="${this.text}-navBtn" class="${c}">
-            ${this.text}
-        </div>
-        `;
+        return (
+            buildComponent("div", { "id": `${this.text}-navBtn`, "class": c }, [], this.text)
+        )
     }
 }

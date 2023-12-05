@@ -1,5 +1,5 @@
-import Component from "../Component.js";
 import State from "../../State/State.js";
+import Component, { buildComponent } from "../Component.js";
 
 export default class CalculationHistory extends Component {
     constructor(props) {
@@ -61,18 +61,12 @@ export default class CalculationHistory extends Component {
     }
 
     getHtml() {
-        return `
-            <div id="calc-history-${this.id}" style="user-select: none;" class="calc-history-item">
-                <div id="calc-history-${this.id}-view" class="calc-history-item-btn">
-                    View
-                </div>
-                <div id="calc-history-${this.id}-delete" class="calc-history-item-btn">
-                    Delete
-                </div>
-                <p class="calc-history-item-text">
-                    ${this.input} = ${this.output}
-                </p>
-            </div>           
-        `;
+        return (
+            buildComponent("div", { "id": `calc-history-${this.id}`, "style": "user-select: none;", "class": "calc-history-item" }, [
+                buildComponent("div", { "id": `calc-history-${this.id}-view`, "class": "calc-history-item-btn" }, [], "View"),
+                buildComponent("div", { "id": `calc-history-${this.id}-delete`, "class": "calc-history-item-btn" }, [], "Delete"),
+                buildComponent("p", { "class": "calc-history-item-text"}, [], `${this.input} = ${this.output}`)
+            ])
+        )
     }
 }

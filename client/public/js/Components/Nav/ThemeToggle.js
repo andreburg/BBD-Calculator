@@ -1,4 +1,4 @@
-import Component from "../Component.js";
+import Component, { buildComponent } from "../Component.js";
 import State from "../../State/State.js";
 
 export default class ThemeToggle extends Component {
@@ -34,10 +34,8 @@ export default class ThemeToggle extends Component {
         Object.values(this.classes).forEach(e => {
             c += ` ${e}`;
         });
-        return `
-        <div id="themeToggle" class="${c}">
-            ${this.globalState.state.page.darkmode ? "Light Mode" : "Dark Mode"}
-        </div>
-        `;
+        return (
+            buildComponent("div", { "id": "themeToggle", "class": c }, [], this.globalState.state.page.darkmode ? "Light Mode" : "Dark Mode")
+        )
     }
 }

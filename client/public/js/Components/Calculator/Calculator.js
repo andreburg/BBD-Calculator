@@ -10,9 +10,7 @@ export default class Calculator extends Component {
         super(params);
 
         this.initComponents();
-
         this.globalState = new State({})
-
         this.inverse = this.globalState.state.calculator.buttonState.inverse;
     }
 
