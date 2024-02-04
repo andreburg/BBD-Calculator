@@ -40,7 +40,7 @@ The routing in this SPA is handled by a custom router implemented in the `Router
 
 ### Router Class
 
-The `Router` class takes an array of routes during initialization. It includes a method `LoadRoute` for loading a specific route based on the current URL.
+The `Router` class takes an array of routes during initialization. It includes a method <div classname="code-tag">`LoadRoute`</div> for loading a specific route based on the current URL.
 
 ### Route Class
 
