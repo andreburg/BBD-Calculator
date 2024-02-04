@@ -2,6 +2,26 @@
 
 This is a Single Page Application (SPA) calculator website built using vanilla JavaScript. The application includes a custom rendering engine and a custom router for managing different pages within the SPA.
 
+## Key Features
+
+- **Modular Components:** The application is structured using a component-based architecture, making it easy to extend and maintain.
+
+- **Custom Router:** Implements a custom router for seamless navigation between different sections of the SPA.
+
+- **State Management:** Utilizes a straightforward state management system to maintain and update the application state, ensuring efficient reactivity.
+
+- **Fully Functional Calculator:** Offers a comprehensive calculator interface with support for basic arithmetic operations, trigonometric functions, and more.
+
+## Getting Started
+
+1. Clone the repository to your local machine.
+2. Ensure you have Node.js installed. If not, download and install it from [Node.js website](https://nodejs.org/).
+3. Run the following commands in your terminal:
+
+   ```bash
+   npm install
+   node index.js
+
 ## Components
 
 The application uses a component-based architecture for building and managing UI elements. The `Components` class is responsible for managing and rendering components, and the `Component` class serves as the base class for creating individual components.
@@ -33,14 +53,3 @@ The application uses a simple state management system implemented in the `State`
 ### State Class
 
 The `State` class includes methods for notifying and silently changing state, ensuring that state changes trigger events for rendering.
-
-## How to Install and Run
-
-1. Ensure you have Node.js installed on your machine. If not, download and install it from [Node.js website](https://nodejs.org/).
-2. Clone the repository.
-3. Open a terminal or command prompt in the project directory.
-4. Run the following commands:
-
-   ```bash
-   npm install
-   node index.js
