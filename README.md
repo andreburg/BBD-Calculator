@@ -21,7 +21,7 @@ This is a Single Page Application (SPA) calculator website built using vanilla J
    ```bash
    npm install
    node index.js
-
+   ```
 ## Components
 
 The application uses a component-based architecture for building and managing UI elements. The `Components` class is responsible for managing and rendering components, and the `Component` class serves as the base class for creating individual components.
